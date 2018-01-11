@@ -1,15 +1,19 @@
 package boyntonrl;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
 public class Controller implements Initializable{
 
@@ -61,5 +65,17 @@ public class Controller implements Initializable{
         }
         numAliveCells.setText("" + aliveCells);
         numDeadCells.setText("" + deadCells);
+    }
+
+    @FXML
+    private void mouseClicked(MouseEvent e) {
+        Cell cell = lifeGrid.getCellAtLocation((int) (e.getX()/Cell.SCALE), (int) (e.getY()/Cell.SCALE));
+        if (cell.isAlive()) {
+            cell.setAlive(false);
+            cell.updateColors();
+        } else {
+            cell.setAlive(true);
+            cell.updateColors();
+        }
     }
 }

@@ -128,4 +128,9 @@ public class LifeGrid {
     public List<List<Cell>> getCells() {
         return cells;
     }
+
+    public Cell getCellAtLocation(int x, int y) {
+        return cells.get(y).get(x);
+    }
+
 }
