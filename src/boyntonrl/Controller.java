@@ -1,5 +1,6 @@
 package boyntonrl;
 
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -20,13 +21,15 @@ public class Controller implements Initializable{
     @FXML
     private Pane gamePane;
     @FXML
-    private Button randomize;
+    private Button randomizeButton;
     @FXML
-    private Button iterate;
+    private Button iterateButton;
     @FXML
     private Label numAliveCells;
     @FXML
     private Label numDeadCells;
+    @FXML
+    private Button iterate10StepsButton;
 
     private LifeGrid lifeGrid;
 
@@ -77,5 +80,16 @@ public class Controller implements Initializable{
             cell.setAlive(true);
             cell.updateColors();
         }
+    }
+
+    @FXML
+    private void iterate10StepsButtonClicked(ActionEvent e) {
+        final int FPS = 2;
+
+        //create key frames with a for loop
+        Timeline timeline = new Timeline(FPS); // lambda for adding key frames
+
+        timeline.play();
+
     }
 }
