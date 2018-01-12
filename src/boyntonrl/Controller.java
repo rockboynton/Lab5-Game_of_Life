@@ -1,5 +1,8 @@
 package boyntonrl;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -9,8 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.net.URL;
+import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -84,12 +90,12 @@ public class Controller implements Initializable{
 
     @FXML
     private void iterate10StepsButtonClicked(ActionEvent e) {
-        final int FPS = 2;
-
-        //create key frames with a for loop
-        Timeline timeline = new Timeline(FPS); // lambda for adding key frames
-
+        final Timeline timeline = new Timeline();
+        for (int i = 0; i < 1000; i+=100) {
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i), event -> iterateButtonClicked(e)));
+            iterateButtonClicked(e);
+            updateCellCount();
+        }
         timeline.play();
-
     }
 }
