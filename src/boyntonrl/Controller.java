@@ -93,7 +93,8 @@ public class Controller implements Initializable{
     private void mouseClicked(MouseEvent e) {
         // calls the method to get a cell at a specific location dependant on the scale of the
         // specific LifeGrid
-        Cell cell = lifeGrid.getCellAtLocation((int) (e.getX()/Cell.SCALE), (int) (e.getY()/Cell.SCALE));
+        Cell cell = lifeGrid.getCellAtLocation((int) (e.getX()/Cell.SCALE),
+                (int) (e.getY()/Cell.SCALE));
         if (cell.isAlive()) {
             cell.setAlive(false);
         } else {

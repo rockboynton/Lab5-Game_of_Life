@@ -125,10 +125,20 @@ public class LifeGrid {
         }
     }
 
+    /**
+     * Accessor for the grid of cells
+     * @return grid of cells
+     */
     public List<List<Cell>> getCells() {
         return cells;
     }
 
+    /**
+     * Accessor for a cell at a specific location
+     * @param x x-coordinate of cell to access in the grid
+     * @param y y-coordinate of cell to access in the grid
+     * @return specific cell at location
+     */
     public Cell getCellAtLocation(int x, int y) {
         return cells.get(y).get(x);
     }
