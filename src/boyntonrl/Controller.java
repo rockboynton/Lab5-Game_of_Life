@@ -1,11 +1,16 @@
+/*
+ * SE1021 - 021
+ * Winter 2017
+ * Lab: Lab 5 Conway's Game of Life
+ * Name: Rock Boynton
+ * Created: 1/13/18
+ */
+
 package boyntonrl;
 
-import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,13 +20,12 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.security.Key;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
-
+/**
+ * Controller for the JavaFX application, Lab5
+ */
 public class Controller implements Initializable{
 
     @FXML
@@ -39,6 +43,11 @@ public class Controller implements Initializable{
 
     private LifeGrid lifeGrid;
 
+    /**
+     * Initializes the Game Pane containing a LifeGrid for Conway's Game of Life
+     * @param location URL location
+     * @param resources bundle of resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         assert gamePane != null :"fx:id=\"gamePane\" was not injected: check your FXML file " +
@@ -59,6 +68,10 @@ public class Controller implements Initializable{
         updateCellCount();
     }
 
+    /**
+     * Updates the count of alive and dead cells in a LifeGrid (There's got to be a more efficient
+     * way to do this?)
+     */
     private void updateCellCount() {
         List<List<Cell>> cells = lifeGrid.getCells();
         int aliveCells = 0;
@@ -78,22 +91,28 @@ public class Controller implements Initializable{
 
     @FXML
     private void mouseClicked(MouseEvent e) {
+        // calls the method to get a cell at a specific location dependant on the scale of the
+        // specific LifeGrid
         Cell cell = lifeGrid.getCellAtLocation((int) (e.getX()/Cell.SCALE), (int) (e.getY()/Cell.SCALE));
         if (cell.isAlive()) {
             cell.setAlive(false);
-            cell.updateColors();
         } else {
             cell.setAlive(true);
-            cell.updateColors();
         }
+        cell.updateColors();
     }
 
     @FXML
     private void iterate10StepsButtonClicked(ActionEvent e) {
+        final int KEY_FRAME_DURATION = 100; // duration between each KeyFrame (in milliseconds)
+        final int STEPS = 10;
         final Timeline timeline = new Timeline();
-        for (int i = 0; i < 1000; i+=100) {
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i), event -> iterateButtonClicked(e)));
-            iterateButtonClicked(e);
+        // create a new KeyFrame every 100
+        for (int i = 0; i <= KEY_FRAME_DURATION*STEPS; i+=KEY_FRAME_DURATION) {
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(i), event -> {
+                iterateButtonClicked(e);
+                updateCellCount();
+            }));
             updateCellCount();
         }
         timeline.play();
